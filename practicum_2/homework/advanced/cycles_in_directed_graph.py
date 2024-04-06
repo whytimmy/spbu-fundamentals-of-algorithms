@@ -38,6 +38,7 @@ if __name__ == "__main__":
         cycles = set()
 
         answer = has_cycles(G, "0", visited, covered_nodes, cycles)
+
         if (answer != 0):
             print(f"Graph {filename} has cycles: {answer}: {cycles} 😇")
             plot_graph(G)
