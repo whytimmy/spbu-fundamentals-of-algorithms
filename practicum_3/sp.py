@@ -69,7 +69,7 @@ def dijkstra_sp_with_priority_queue(
 
 
 if __name__ == "__main__":
-    G = nx.read_edgelist("graph_1.edgelist", create_using=nx.Graph)
+    G = nx.read_edgelist("../practicum_4/graph_1.edgelist", create_using=nx.Graph)
     plot_graph(G)
     shortest_paths = dijkstra_sp_with_priority_queue(G, source_node="0")
     test_node = "5"
