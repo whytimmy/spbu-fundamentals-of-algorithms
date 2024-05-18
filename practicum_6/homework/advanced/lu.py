@@ -14,14 +14,14 @@ from src.linalg import get_scipy_solution
 
 @dataclass
 class Performance:
-    time1: float = 0.0
+    time: float = 0.0
     relative_error: float = 0.0
 def lu(A: NDArray, permute: bool) -> tuple[NDArray, NDArray, NDArray]:
 
     n = len(A)
     U = np.copy(A)
-    L = np.eye(A)
-    P = np.eye(A)
+    L = np.eye(n)
+    P = np.eye(n)
 
     for k in range(n - 1):
         if permute:
@@ -68,7 +68,7 @@ def run_test_cases(n_runs: int, path_to_homework: str) -> dict[str, Performance]
             t1 = time.time()
             L, U, P = lu(A, permute=True)
             t2 = time.time()
-            perf.time1 += t2 - t1
+            perf.time += t2 - t1
             if j == 0:  # first run => compute solution
                 x = solve(L, U, P, b)
                 x_exact = get_scipy_solution(A, b)
