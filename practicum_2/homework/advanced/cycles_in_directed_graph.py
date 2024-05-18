@@ -12,7 +12,26 @@ TEST_GRAPH_FILES = [
 #но элементы нельзя менять после объявления.
 
 #Зачем выходить из рекурсии, если можно найти все циклы сразу:
-def has_cycles(G: nx.DiGraph, node: Any, visited: set, covered_nodes: set, cycles: set):
+def recursion(G: nx.DiGraph, node: Any, visited: set, covered_nodes: set, cycles: set):
+    visited.add(node)
+    covered_nodes.add(node)
+
+    for neighbor in G.neighbors(node):
+        if neighbor in covered_nodes:
+            cycles.add(frozenset(covered_nodes)) #хз почему обычный set не подходит
+        if neighbor not in visited:
+            recursion(G, neighbor, visited, covered_nodes, cycles)
+
+    covered_nodes.remove(node)
+
+    return len(cycles)
+
+def has_cycles(G: nx.DiGraph):
+
+    visited = set()
+    covered_nodes = set()
+    cycles = set()
+    node = "0"
 
     visited.add(node)
     covered_nodes.add(node)
@@ -21,26 +40,21 @@ def has_cycles(G: nx.DiGraph, node: Any, visited: set, covered_nodes: set, cycle
         if neighbor in covered_nodes:
             cycles.add(frozenset(covered_nodes)) #хз почему обычный set не подходит
         if neighbor not in visited:
-            has_cycles(G, neighbor, visited, covered_nodes, cycles)
+            recursion(G, neighbor, visited, covered_nodes, cycles)
 
     covered_nodes.remove(node)
 
-    return len(cycles)
+    return cycles
 
 if __name__ == "__main__":
     for filename in TEST_GRAPH_FILES:
         # Load the graph
         G = nx.read_edgelist(filename, create_using=nx.DiGraph)
 
-
-        visited = set()
-        covered_nodes = set()
-        cycles = set()
-
-        answer = has_cycles(G, "0", visited, covered_nodes, cycles)
+        answer = has_cycles(G)
 
         if (answer != 0):
-            print(f"Graph {filename} has cycles: {answer}: {cycles} 😇")
+            print(f"Graph {filename} has cycles: {len(answer)}: {answer} 😇")
             plot_graph(G)
         else:
             print(f"Graph {filename} hasn't got cycles 😔")
