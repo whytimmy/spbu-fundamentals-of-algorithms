@@ -41,7 +41,7 @@ def max_flow(G: nx.DiGraph, s: Any, t: Any) -> Any:
     parent = {n: None for n in G}
     G_reverse = G.reverse() # Reverse the graph
 
-    for a, b, data in G_reverse.edges(data=True): # Зануляем, поскольку в начале остаточный поток нулевой
+    for a, b, data in G_reverse.edges(data=True):
         G_reverse[a][b]['weight'] = 0
 
 
@@ -78,16 +78,15 @@ if __name__ == "__main__":
         print(f"Maximum flow is {val}. Should be {legit}")
         print("-"*50)
 
-        print("Визуализация максимального потока:")
-        plot_graph(Q) # Визуализация максимального потока
-
-        print("-"*50)
-
-        print("Визуализация остаточного графа:")
-        plot_graph(Q_reverse) # Визуализация остаточного графа
-
-        print("-"*50)
+        # print("Визуализация максимального потока:")
+        # plot_graph(Q) # Визуализация максимального потока
+        #
+        # print("-"*50)
+        #
+        # print("Визуализация остаточного графа:")
+        # plot_graph(Q_reverse) # Визуализация остаточного графа
+        #
+        # print("-"*50)
 
 
     # Время работы алгоритма Эдмондса-Карпа - O(V(E^2))
-
