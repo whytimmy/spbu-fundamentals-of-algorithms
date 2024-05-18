@@ -6,7 +6,7 @@ from src.plotting import plot_graph
 TEST_GRAPH_FILES = [
     "graph_1_wo_cycles.edgelist",
     "graph_2_wo_cycles.edgelist",
-    #"graph_3_wo_cycles.edgelist",
+    "graph_3_wo_cycles.edgelist",
 ]
 
 #Frozenset (замороженное множество) – это класс с характеристиками множества,
@@ -45,7 +45,11 @@ def has_cycles(G: nx.DiGraph):
 
     covered_nodes.remove(node)
 
-    return cycles
+    #return cycles
+    if len(cycles) > 0:
+        return True
+    else:
+        return False
 
 if __name__ == "__main__":
     for filename in TEST_GRAPH_FILES:
@@ -53,11 +57,6 @@ if __name__ == "__main__":
         G = nx.read_edgelist(
             os.path.join("practicum_2", "homework", filename), create_using=nx.DiGraph
         )
-
-        answer = has_cycles(G)
-
-        if (len(answer) != 0):
-            print(f"Graph {filename} has cycles: True")
-            #plot_graph(G)
-        else:
-            print(f"Graph {filename} has cycles: False")
+        # Output whether it has cycles
+        print(f"Graph {filename} has cycles: {has_cycles(G)}")
+#%%
